@@ -1,0 +1,131 @@
+﻿@model CrudEntity.Models.Students
+@{
+}
+
+
+
+
+<div class="row">
+
+    <div class="col-6 offset-3">
+
+
+        <form method="post" asp-action="Create" asp-controller="Student">
+            <div class="form-group">
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" id="name" class="form-control" placeholder="Enter your Name" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MobileNumber"> </label>
+                <input asp-for="MobileNumber" id="mobile" class="form-control" placeholder="Enter your Mobile" />
+                <span asp-validation-for="MobileNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StateId" class="control-label">Select State</label>
+                <select asp-for="StateId" id="stateid" class="form-control state"><option>Select</option></select>
+                <span asp-validation-for="StateId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CityId" class="control-label">Select City</label>
+                <select asp-for="CityId" id="cityid" class="form-control city"><option>Select</option></select>
+                <span asp-validation-for="CityId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="radio">
+                    <label><input  type="radio" name="Gender_Id" id="Gender_Id" value="1" />Male</label>
+                </div>
+                <div class="radio">
+                    <label><input  type="radio" name="Gender_Id" id="Gender_Id" value="2" />Female</label>
+                </div>
+
+            </div>
+            @*<h3>Technology</h3>
+            <div class="control-label">
+                <input asp-for="Csharp" type="checkbox" id="Csharp" value="Male">
+                <label for="vehicle1"> Csharp</label><br>
+
+                <input asp-for="Android" type="checkbox" id="Android" value="Female">
+                <label for="vehicle2"> Android</label><br>
+
+                <input asp-for="Python" type="checkbox" id="Python" value="true">
+                <label for="vehicle3"> Python</label>
+                <input asp-for="Java" type="checkbox" id="Java" value="true">
+                <label for="vehicle3"> Java</label>
+            </div>*@
+
+
+
+            @*<div class="form-group">
+            <div class="col-md-10">
+                <label asp-for="GenderId">Gender</label>
+             <input id="GenderId" name="Gender" value="Male" type="radio"> Male
+              <input id="GenderID" name="Gender" value="Female" type="radio">Female
+            </div>
+
+
+
+        </div>*@
+            <div class="form-group">
+                <button id="btnsubmit" type="Submit" class="btn btn-success">Submit</button>
+            </div>
+
+        </form>
+
+
+    </div>
+</div>
+
+
+
+<script>
+
+    $(document).ready(function () {
+        getStates();
+    $("#stateid").change(function () {
+      var id = $("#stateid").val();
+    $("#cityid").empty();
+    $("#cityid").append("<option>Select</option>")
+    getCities(id);
+        });
+    });
+    function getStates() {
+
+        $.get('@Url.Action("GetStates","Student")', function (result) {
+            console.log(result);
+            $.each(result, function (index, item) {
+               // console.log(item)
+                $("#stateid").append("<option value=" + item.stateId + ">" + item.state + "</option>")
+            })
+        });
+    }
+
+    function getCities(id) {
+
+         $.get('@Url.Action("GetCity","Student")', { "id" : id }, function (result) {
+            $.each(result, function (index, item) {
+                $("#cityid").append("<option value=" + item.cityId + ">" + item.city + "</option>")
+            });
+        });
+    }
+    function getGender(id) {
+
+         $.get('@Url.Action("gtGender","Student")', { "id" : id }, function (result) {
+            $.each(result, function (index, item) {
+                $("#Gender").append("<option value=" + item.GenderId + ">" + item.Gender + "</option>")
+            });
+        });
+    }
+     //$(document).ready(function () {
+
+     //           $("#Male").prop("checked", true);
+
+     //   });
+
+
+</script>
+
+

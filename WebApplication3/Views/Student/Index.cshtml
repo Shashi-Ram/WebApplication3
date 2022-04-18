@@ -1,0 +1,46 @@
+﻿@model IEnumerable<CrudEntity.Models.ViewModel.StudentViewModel>
+@{ 
+
+}
+<div>
+    <h2>Student Data</h2>
+
+    <p style="text-align:right;margin-right:20px;">
+        <a class="btn btn-outline-primary" asp-action="Create">Create New</a>
+    </p>
+
+    <table class=" table table-bordered">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Mobile No</th>
+            <th>State</th>
+            <th>City</th>
+            <th>Android</th>
+            <th>Gender</th>
+            @*<th>Python</th>
+            <th>Java</th>
+            <th>CSharp</th>
+            <th>Action</th>*@
+        </tr>
+        @foreach (var std in Model)
+        {
+            <tr>
+                <td>@std.Id</td>
+                <td>@std.FirstName</td>
+                <td>@std.MobileNumber</td>
+                <td>@std.State</td>
+                <td>@std.City</td>
+                <td>@std.City</td>
+                <td>@std.Gender</td>
+                @*<td>@std.python</td>
+                <td>@std.java</td>
+                <td>@std.csharp</td>*@
+                <td>
+                    <a asp-action="Update" asp-controller="Student" asp-route-id="@std.Id" class="btn btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-controller="Student" asp-route-id="@std.Id" class="btn btn-danger" onclick="return confirm('Do you Want to Delete')">Delete</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
